@@ -3,12 +3,35 @@
     <script src="nblite.js"></script>
     <script src="index.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css"/>
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <title>webappy</title>
+    <py-config style="display: none">
+      packages = [
+        "qrcode",
+        "matplotlib",
+      ]
+    </py-config>
   </head>
   
   <body>
-    <py-script> print('Now you can!') </py-script>
+            <py-script>
+              import qrcode
+              from matplotlib import pyplot as plt
+              from matplotlib import image as mpimg
+
+              qr = qrcode.QRCode(
+                  version=1,
+                  error_correction=qrcode.constants.ERROR_CORRECT_L,
+                  box_size=10,
+                  border=2,
+              )
+              qr.add_data('0101046440')
+              img = qr.make_image(fill_color="#000000", back_color="white")
+              plt.imshow(img)
+              plt.axis('off')
+              plt.show()
+              display(img, target="mpl")
+            </py-script>
+    <div id="mpl"></div>
   </body>
 </html>
